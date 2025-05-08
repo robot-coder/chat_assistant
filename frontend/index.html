@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Assistant</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chat { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; }
+        #user-input { width: 100%; }
+    </style>
+</head>
+<body>
+    <h1>Chat Assistant</h1>
+    <div id="chat"></div>
+    <input type="text" id="user-input" placeholder="Type your message..." />
+    <button id="send">Send</button>
+
+    <script>
+        $("#send").click(function() {
+            const userInput = $("#user-input").val();
+            const llmChoice = "Your LLM Choice"; // Replace with actual choice logic
+            $.post("/chat/", { prompt: userInput, llm_choice: llmChoice }, function(data) {
+                $("#chat").append(`<div>User: ${userInput}</div>`);
+                $("#chat").append(`<div>Assistant: ${data.response}</div>`);
+                $("#user-input").val("");
+            });
+        });
+    </script>
+</body>
+</html>
